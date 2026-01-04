@@ -1,0 +1,164 @@
+[project]
+name = "mel-cepstral-distance"
+version = "0.0.4"
+description = "A Python library for computing the Mel-Cepstral Distance (also known as Mel-Cepstral Distortion, MCD) between two inputs. This implementation is based on the paper 'Mel-Cepstral Distance Measure for Objective Speech Quality Assessment' by Kubichek (1993)."
+readme = "README.md"
+requires-python = ">=3.8, <3.14"
+license = { file = "LICENSE" }
+authors = [{ name = "Stefan Taubert" }, { name = "Jasmin Sternkopf" }]
+maintainers = [{ name = "Stefan Taubert" }]
+keywords = [
+  "mel-cepstral distance",
+  "mel-cepstral distortion",
+  "MCD",
+  "speech synthesis",
+  "text-to-speech",
+  "TTS",
+  "MFCC",
+  "mel spectrogram",
+  "spectral distance",
+  "cepstral analysis",
+  "dynamic time warping",
+  "DTW",
+  "objective evaluation",
+  "speech quality",
+  "speech processing",
+  "audio similarity",
+  "speech comparison",
+  "speech metrics",
+  "linguistic evaluation",
+  "signal processing",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Operating System :: OS Independent",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX",
+  "Operating System :: POSIX :: BSD",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: Unix",
+  "Operating System :: Microsoft :: Windows",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Scientific/Engineering :: Signal Processing",
+  "Topic :: Multimedia :: Sound/Audio",
+  "Topic :: Multimedia :: Sound/Audio :: Analysis",
+  "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+  "Topic :: Multimedia :: Sound/Audio :: Speech",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+]
+dependencies = ["numpy>=1.22.4", "scipy>=1.8.0", "fastdtw>=0.3.4"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-cov", "pytest-xdist", "tox", "ruff", "mypy", "rope", "build", "twine"]
+
+[project.urls]
+Homepage = "https://github.com/stefantaubert/mel-cepstral-distance"
+Issues = "https://github.com/stefantaubert/mel-cepstral-distance/issues"
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+packages = ["mel_cepstral_distance"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["mel_cepstral_distance", "mel_cepstral_distance.*"]
+exclude = [
+  "mel_cepstral_distance_cli",
+  "mel_cepstral_distance_cli.*",
+  "mel_cepstral_distance_analysis",
+  "mel_cepstral_distance_analysis.*",
+  "mel_cepstral_distance_analysis_tests",
+  "mel_cepstral_distance_analysis_tests.*",
+  "mel_cepstral_distance_analysis_old",
+  "mel_cepstral_distance_analysis_old.*",
+  "mel_cepstral_distance_tests",
+  "mel_cepstral_distance_tests.*",
+  "mel_cepstral_distance_debug",
+  "mel_cepstral_distance_debug.*",
+]
+namespaces = true
+
+[tool.pytest.ini_options]
+log_cli = true
+log_level = "DEBUG"
+testpaths = ["src/mel_cepstral_distance_tests"]
+
+[tool.ruff]
+src = ["src/mel_cepstral_distance"]
+line-length = 88
+indent-width = 2
+
+[tool.ruff.format]
+indent-style = "space"
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    "C4",
+    "T20",
+    "PERF",
+    "ANN",
+    "TID",
+    "EXE", 
+    "W",
+    # "D",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["mel_cepstral_distance*"]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py{38,39,310,311,312,313}
+isolated_build = True
+
+[testenv]
+setenv =
+  COVERAGE_FILE = .coverage.{envname}
+
+deps =
+  pytest
+  pytest-cov
+  pytest-xdist
+  mypy
+  ruff
+
+commands =
+  mypy
+  ruff check src/mel_cepstral_distance
+  ruff check src/mel_cepstral_distance_tests
+  pytest -n auto \
+    --cov=src/mel_cepstral_distance \
+    --cov-append \
+    --cov-report=
+"""
+
+[build-system]
+requires = ["setuptools >= 40.9.0", "wheel"]
+build-backend = "setuptools.build_meta"
