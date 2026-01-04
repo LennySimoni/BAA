@@ -6,5 +6,5 @@ pip install numpy scipy librosa soundfile pyclarity
 
 
 Please create two folders:
-- "test" -> folder with all the files you want to transform
-- "out" -> output folder of all the transformed files.
+- input folder with all the files you want to transform.
+- output folder of all the transformed files.
